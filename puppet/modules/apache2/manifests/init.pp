@@ -11,6 +11,17 @@ class apache2::install {
     require => Package['apache2'],
   }
 
+  # change listen port
+  file { '/etc/apache2/ports.conf':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    source  => '/vagrant/files/etc/apache2/ports.conf',
+    require => Package['apache2'],
+    notify  => Service['apache2'],
+  }
+
   # the httpd.conf change the user/group that apache uses to run its process
   file { '/etc/apache2/conf-available/user.conf':
     ensure  => file,
